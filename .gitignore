@@ -1,7 +1,6 @@
 __pycache__/
 *.pyc
 Data/
-models/
 *.pt
 *.h5
 .env
