@@ -1,9 +1,3 @@
-# ============================================================
-# STEP 2: PREPROCESSING (Upgraded Version)
-# UPGRADE 1: Each song → multiple 3-second segments (~10x more data)
-# UPGRADE 2: Simple audio augmentation (time shift + noise)
-# ============================================================
-
 import os
 import numpy as np
 import librosa
