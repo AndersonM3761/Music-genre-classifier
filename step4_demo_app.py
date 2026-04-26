@@ -1,16 +1,3 @@
-# ============================================================
-# STEP 4: DEMO APP — SONIQ CINEMATIC EDITION
-# Run with: streamlit run step4_demo_app.py
-#
-# HOW EACH UPGRADE ACTUALLY WORKS IN STREAMLIT:
-#   1. CSS effects    → st.markdown(<style>) — works fine
-#   2. Particle canvas→ components.v1.html() injects into parent DOM (same-origin)
-#   3. Background divs→ injected as real <div> elements, NOT ::before/::after
-#   4. Boot sequence  → st.empty() loop with time.sleep
-#   5. Genre lighting → dynamic injected <div> id="soniq-genre-bg"
-#   6. RMS glow       → inline style on result card
-# ============================================================
-
 import streamlit as st
 import streamlit.components.v1 as components
 import numpy as np
@@ -76,12 +63,7 @@ CARD_BG        = '#07071a'
 GRID_COL       = '#111130'
 TEXT_COL       = '#888899'
 
-# ============================================================
-# UPGRADE 1 — CSS FOUNDATIONS
-# (fonts, layout, component styles, all animations)
-# NOTE: background atmosphere is done via real <div> injections below
-#       NOT via ::before/::after which Streamlit silently ignores
-# ============================================================
+
 
 st.markdown("""
 <style>
@@ -310,11 +292,7 @@ div[data-baseweb="select"] { font-family:'Share Tech Mono',monospace !important;
 </style>
 """, unsafe_allow_html=True)
 
-# ============================================================
-# UPGRADE 1b — BACKGROUND ATMOSPHERE (injected as real <div>s)
-# ::before / ::after on .stApp are unreliable in Streamlit —
-# we inject real fixed-position divs instead.
-# ============================================================
+
 
 st.markdown("""
 <!-- Nebula glow layer -->
@@ -343,12 +321,7 @@ st.markdown("""
 "></div>
 """, unsafe_allow_html=True)
 
-# ============================================================
-# UPGRADE 2 — PARTICLE CANVAS
-# st.markdown strips <script> tags — we use components.v1.html()
-# which creates a same-origin iframe whose JS can inject a canvas
-# into window.parent.document (the actual Streamlit page).
-# ============================================================
+
 
 components.html("""
 <!DOCTYPE html>
@@ -791,10 +764,7 @@ with ctrl2:
 if uploaded:
     st.audio(uploaded)
 
-    # ----------------------------------------------------------
-    # UPGRADE 3 — CINEMATIC BOOT SEQUENCE
-    # Uses st.empty() loop — this genuinely works in Streamlit
-    # ----------------------------------------------------------
+    
     boot_slot = st.empty()
     boot_steps = [
         (8,  "LOADING AUDIO BUFFER"),
@@ -833,11 +803,7 @@ if uploaded:
     color = GENRE_COLORS[top['top_genre']]
     emoji = GENRE_EMOJI[top['top_genre']]
 
-    # ----------------------------------------------------------
-    # UPGRADE 4 — DYNAMIC GENRE LIGHTING
-    # Updates the real #soniq-genre-bg div injected earlier.
-    # Uses JavaScript via components.html (same-origin, works).
-    # ----------------------------------------------------------
+   
     components.html(f"""
     <script>
     (function() {{
@@ -852,10 +818,7 @@ if uploaded:
     </script>
     """, height=0, scrolling=False)
 
-    # ----------------------------------------------------------
-    # UPGRADE 5 — AUDIO-REACTIVE GLOW
-    # RMS energy (0.0–0.3) → glow blur (20px–100px) + opacity
-    # ----------------------------------------------------------
+   
     rms_raw     = features['rms_energy']
     glow_px     = int(np.clip(rms_raw * 340, 20, 110))
     glow_alpha  = round(float(np.clip(rms_raw * 5.5, 0.08, 0.55)), 2)
