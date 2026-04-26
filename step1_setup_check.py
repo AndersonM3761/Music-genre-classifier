@@ -1,8 +1,3 @@
-# ============================================================
-# STEP 1: SETUP CHECK (PyTorch Version)
-# Verifies your environment is ready
-# ============================================================
-
 import subprocess
 import sys
 
