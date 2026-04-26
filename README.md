@@ -101,3 +101,13 @@ Librosa — audio feature extraction (MFCC, Mel Spectrogram)
 Streamlit — interactive web application
 Scikit-learn — evaluation metrics and confusion matrix
 GTZAN — benchmark audio dataset
+
+## Troubleshooting
+
+**ModuleNotFoundError** — Run `pip install -r requirements.txt` and ensure your virtual environment is activated.
+
+**Librosa load error** — Ensure audio files are valid `.wav` format extracted correctly from the GTZAN zip.
+
+**CUDA out of memory** — Reduce batch size in `step3_train.py` or switch to CPU by setting `device = torch.device('cpu')`.
+
+**Streamlit app not loading model** — Ensure `models/` folder contains all three `.pth` files before running the app.
